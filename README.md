@@ -1,5 +1,93 @@
 # 📘 Task Management API Documentation
 
+# Project Setup and Requirements
+
+## Requirements
+
+Before starting, make sure you have the following installed on your machine:
+
+1. **Docker**: The project uses Docker for setting up and managing the database. You can download it from [here](https://www.docker.com/products/docker-desktop).
+2. **Node.js**: Ensure that you have Node.js installed. You can download it from [here](https://nodejs.org/).
+3. **Git**: You'll need Git to clone the repository. You can download it from [here](https://git-scm.com/).
+
+## Project Dependencies
+
+This project depends on the following packages:
+
+- **@prisma/client**: Prisma Client is an auto-generated and type-safe query builder for your database.
+- **bcrypt**: A library for hashing and comparing passwords.
+- **express**: A fast, unopinionated, minimalist web framework for Node.js.
+- **jsonwebtoken**: A library for issuing and verifying JSON Web Tokens (JWT).
+- **pg**: A PostgreSQL client for Node.js.
+- **prisma**: The Prisma ORM to manage database schema and migrations.
+
+To install the project dependencies, run:
+
+```bash
+npm install
+```
+
+---
+
+# How to Start the Project
+
+## Step 1: Clone the Repository
+
+Clone the project repository from GitHub:
+
+```bash
+git clone https://github.com/Skypulse-technologies/back-task-management.git
+cd back-task-management
+```
+
+## Step 2: Set Up the Database
+
+The project uses Docker to manage the database.
+
+### Start the Database:
+
+To start the database, run the following command:
+
+```bash
+npm run database-start
+```
+
+This will set up the database container using `docker-compose`.
+
+### Stop the Database:
+
+To stop the database container, run the following command:
+
+```bash
+npm run database-finish
+```
+
+## Step 3: Run the Application
+
+To start the application, run:
+
+```bash
+npm start
+```
+
+This will start the Node.js server, and the API will be accessible at `http://localhost:3000`.
+
+---
+
+# How to Use the API
+
+Once the server is up and running, you can access the API endpoints as described in the [API Documentation](#). You can use tools like [Postman](https://www.postman.com/) to test the endpoints.
+
+Here are some common commands you might find useful:
+
+- **Start the server**: `npm start`
+- **Start the database**: `npm run database-start`
+- **Stop the database**: `npm run database-finish`
+
+For any issues or bugs, please refer to the [GitHub Issues](https://github.com/Skypulse-technologies/back-task-management/issues) page.
+
+---
+
 ## 🌍 Base URL
 
 ```
