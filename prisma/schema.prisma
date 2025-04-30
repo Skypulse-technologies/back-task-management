@@ -1,0 +1,72 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")  // URL do banco de dados configurada no .env
+}
+
+model User {
+  id       Int    @id @default(autoincrement())
+  name     String
+  email    String @unique
+  password String
+  role     Role
+  projects Project[] @relation("PMProjects")
+  tasks    Task[]    @relation("UserTasks")
+  comments Comment[]
+  timeLogs TimeLog[]
+}
+
+model Project {
+  id          Int      @id @default(autoincrement())
+  name        String
+  description String
+  status      String
+  pm          User     @relation("PMProjects", fields: [pmId], references: [id])
+  pmId        Int
+  tasks       Task[]
+  comments    Comment[]
+}
+
+model Task {
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String
+  status      String
+  assignedTo  User     @relation("UserTasks", fields: [assignedToId], references: [id])
+  assignedToId Int
+  deadline    DateTime
+  project     Project  @relation(fields: [projectId], references: [id])
+  projectId   Int
+  comments    Comment[]
+  timeLogs    TimeLog[]
+}
+
+model Comment {
+  id        Int     @id @default(autoincrement())
+  content   String
+  author    User    @relation(fields: [authorId], references: [id])
+  authorId  Int
+  project   Project? @relation(fields: [projectId], references: [id])
+  projectId Int?
+  task      Task?    @relation(fields: [taskId], references: [id])
+  taskId    Int?
+}
+
+model TimeLog {
+  id      Int      @id @default(autoincrement())
+  date    DateTime
+  hours   Float
+  task    Task     @relation(fields: [taskId], references: [id])
+  taskId  Int
+  user    User     @relation(fields: [userId], references: [id])
+  userId  Int
+}
+
+enum Role {
+  PM
+  User
+  Client
+}

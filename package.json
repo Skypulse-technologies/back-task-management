@@ -1,0 +1,30 @@
+{
+  "name": "back-task-management",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "database-start": "docker-compose up -d",
+    "database-finish": "docker-compose down",
+    "start": "node src/api/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Skypulse-technologies/back-task-management.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Skypulse-technologies/back-task-management/issues"
+  },
+  "homepage": "https://github.com/Skypulse-technologies/back-task-management#readme",
+  "dependencies": {
+    "@prisma/client": "^6.6.0",
+    "bcrypt": "^5.1.1",
+    "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "pg": "^8.15.6",
+    "prisma": "^6.6.0"
+  }
+}
