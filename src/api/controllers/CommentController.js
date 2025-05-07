@@ -6,8 +6,7 @@ const prisma = new PrismaClient();
 
 // Create a comment
 router.post("/", async (req, res) => {
-  const { content, taskId, projectId } = req.body;
-  const userId = req.user?.id || 1; // fallback for MVP if auth isn't added yet
+  const { content, taskId, projectId, authorId } = req.body;
 
   if (!content || (!taskId && !projectId)) {
     return res.status(400).json({ error: "Content and either taskId or projectId are required" });
@@ -19,11 +18,12 @@ router.post("/", async (req, res) => {
         content,
         taskId,
         projectId,
-        authorId: userId,
+        authorId,
       },
     });
     res.status(201).json(comment);
   } catch (err) {
+    console.log(err)
     res.status(500).json({ error: "Failed to create comment" });
   }
 });
