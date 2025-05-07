@@ -18,8 +18,10 @@ router.post('/', async (req, res) => {
     const user = await prisma.user.create({
       data: { name, email, password: hashed, role }
     });
-    res.status(201).json({ id: user.id, name: user.name, email: user.email, role: user.role });
+    const token = jwt.sign({ user }, JWT_SECRET, { expiresIn: '1d' });
+    res.status(201).json({ token });
   } catch (err) {
+    console.log(err)
     res.status(500).json({ error: 'Erro ao criar usuário' });
   }
 });
@@ -33,7 +35,9 @@ router.post('/login', async (req, res) => {
     const valid = await bcrypt.compare(password, user.password);
     if (!valid) return res.status(401).json({ error: 'Senha incorreta' });
 
-    const token = jwt.sign({ userId: user.id, role: user.role }, JWT_SECRET, { expiresIn: '1d' });
+    delete user.password
+    
+    const token = jwt.sign({ user }, JWT_SECRET, { expiresIn: '1d' });
     res.json({ token });
   } catch (err) {
     res.status(500).json({ error: 'Erro no login' });

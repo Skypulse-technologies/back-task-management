@@ -23,19 +23,44 @@ router.post("/", async (req, res) => {
 });
 
 router.get("/", async (req, res) => {
+  const { userId, email } = req.query;
+
+  if (!userId || !email) {
+    return res.status(400).json({ error: "Parâmetros 'userId' e 'email' são obrigatórios." });
+  }
+
   try {
     const projects = await prisma.project.findMany({
+      where: {
+        OR: [
+          { pmId: Number(userId) },
+          {
+            tasks: {
+              some: {
+                assignees: {
+                  some: {
+                    email: String(email),
+                  },
+                },
+              },
+            },
+          },
+        ],
+      },
       include: {
         pm: true,
         tasks: true,
         comments: true,
       },
     });
+
     res.json(projects);
   } catch (err) {
+    console.error("Erro ao buscar projetos:", err);
     res.status(500).json({ error: "Erro ao buscar projetos" });
   }
 });
+
 
 router.get("/:id", async (req, res) => {
   try {
